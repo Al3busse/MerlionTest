@@ -1,0 +1,16 @@
+{
+  "testApp": {
+    "estadoEnvios": {
+      "home": {
+        "title": "Estado de Envíos",
+        "notFound": "No se encontraron Envíos."
+      },
+      "state": "Estado",
+      "product": "Producto",
+      "salesN": "Nº de Venta",
+      "send": "Enviar",
+      "delivered": "Entregado",
+      "tabResults": "No se encontraron resultados."
+    }
+  }
+}

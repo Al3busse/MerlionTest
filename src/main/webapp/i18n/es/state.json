@@ -2,9 +2,9 @@
   "testApp": {
     "State": {
       "null": "",
-      "IN_CHARGE": "IN_CHARGE",
-      "SHIPPED": "SHIPPED",
-      "DELIVERED": "DELIVERED"
+      "IN_CHARGE": "ENCARGADO",
+      "SHIPPED": "ENVIADO",
+      "DELIVERED": "ENTREGADO"
     }
   }
 }
