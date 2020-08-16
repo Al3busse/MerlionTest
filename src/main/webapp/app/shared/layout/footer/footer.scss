@@ -1,3 +1,15 @@
 .footer {
-  height: 50px;
+  height: auto;
+  width: 100%;
+  background-color: #2a6a9e;
+}
+
+.footer-text {
+  color: #fff;
+  text-align: center;
+  margin: 5px;
+}
+.footer-link {
+  color: #fff;
+  text-decoration-color: #004f87;
 }

@@ -23,6 +23,7 @@ const useStyles = makeStyles({
   },
   tabLabel: {
     fontWeight: 900,
+    color: '#004F87',
   },
   paper: { flexGrow: 1 },
 });
@@ -62,7 +63,13 @@ export const Envios = (props: IEnviosProps) => {
       </h2>
       {salesList && salesList.length > 0 ? (
         <Paper className={classes.paper}>
-          <Tabs className={classes.tabs} value={value} onChange={handleTabChange} indicatorColor="primary" textColor="primary" centered>
+          <Tabs
+            className={classes.tabs}
+            value={value}
+            onChange={handleTabChange}
+            TabIndicatorProps={{ style: { background: '#004F87' } }}
+            centered
+          >
             <Tab label={<span className={classes.tabLabel}>ENCARGADOS</span>} {...tabProps(0)} className={classes.tab} />
             <Tab label={<span className={classes.tabLabel}>ENVIADOS</span>} {...tabProps(1)} className={classes.tab} />
             <Tab label={<span className={classes.tabLabel}>ENTREGADOS</span>} {...tabProps(2)} className={classes.tab} />

@@ -26,6 +26,7 @@ const useStyles = makeStyles({
     },
     textTransform: 'none',
   },
+  button: { backgroundColor: '#004f87', color: '#fff' },
 });
 
 // props de los paneles de tabs
@@ -131,11 +132,11 @@ export default function TabPanel(props: TabPanelProps) {
                         <TableCell className={'text-right' + ' ' + classes.tableCell}>
                           <div className="btn-group flex-btn-group-container">
                             <Button
+                              className={classes.button}
                               onClick={() => {
                                 updateState(sales.id);
                               }}
                               variant="contained"
-                              color="primary"
                             >
                               <FontAwesomeIcon icon="truck" className="mr-1" />
                               <span className="d-none d-md-inline">
@@ -148,11 +149,11 @@ export default function TabPanel(props: TabPanelProps) {
                         <TableCell className={'text-right' + ' ' + classes.tableCell}>
                           <div className="btn-group flex-btn-group-container">
                             <Button
+                              className={classes.button}
                               onClick={() => {
                                 updateState(sales.id);
                               }}
                               variant="contained"
-                              color="primary"
                             >
                               <FontAwesomeIcon icon="clipboard-check" className="mr-1" />
                               <span className="d-none d-md-inline">

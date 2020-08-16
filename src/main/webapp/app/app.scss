@@ -1,13 +1,14 @@
 // Override Boostrap variables
 // Import Bootstrap source files from node_modules
 @import 'node_modules/bootstrap/scss/bootstrap';
+
 body {
   background: #fafafa;
   margin: 0;
+  color: #2a6a9a;
 }
 
 a {
-  color: #533f03;
   font-weight: bold;
 }
 
@@ -28,9 +29,9 @@ a {
     height: calc(100% - 40px);
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 1rem;
+    padding: 0;
     .card {
-      padding: 1rem;
+      padding: 1rem 2rem 1rem 2rem;
     }
     .view-routes {
       height: 100%;
