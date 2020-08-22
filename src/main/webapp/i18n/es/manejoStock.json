@@ -1,0 +1,14 @@
+{
+  "testApp": {
+    "manejoStock": {
+      "home": {
+        "title": "Manejo de Stock",
+        "notFound": "Ningún producto encontrado"
+      },
+      "availableToSellQuantity": "Disponibles para la venta",
+      "inChargeQuantity": "Encargados",
+      "brokenQuantity": "Averiados",
+      "product": "Producto"
+    }
+  }
+}
