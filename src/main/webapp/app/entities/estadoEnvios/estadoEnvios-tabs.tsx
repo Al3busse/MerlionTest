@@ -151,7 +151,7 @@ export default function TabPanel(props: TabPanelProps) {
                   ))
               ) : (
                 <TableRow className="alert alert-warning">
-                  <TableCell className={classes.tableCell}>
+                  <TableCell className={classes.tableCell} colSpan={3}>
                     <Translate contentKey="testApp.estadoEnvios.tabResults">No se encontraron resultados.</Translate>
                   </TableCell>
                 </TableRow>
