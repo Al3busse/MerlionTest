@@ -38,22 +38,20 @@ function tabProps(index: any) {
 
 export const Envios = (props: IEnviosProps) => {
   // tab index
-  const [value, setValue] = useState(0);
+  const [tabActivo, changeTab] = useState(0);
+  const [refresh, newRefresh] = useState(0);
 
   // estado para refresh de pantalla
-  const [counter, updateCounter] = useState(0);
   useEffect(() => {
     props.getEntities();
-  }, []);
-
-  const classes = useStyles();
+  }, [tabActivo, refresh]);
 
   // handle para cambio de Tab
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-    updateCounter(counter + 1);
+    changeTab(newValue);
   };
 
+  const classes = useStyles();
   const { salesList, loading } = props;
 
   return (
@@ -65,7 +63,7 @@ export const Envios = (props: IEnviosProps) => {
         <Paper className={classes.paper}>
           <Tabs
             className={classes.tabs}
-            value={value}
+            value={tabActivo}
             onChange={handleTabChange}
             TabIndicatorProps={{ style: { background: '#004F87' } }}
             centered
@@ -74,13 +72,13 @@ export const Envios = (props: IEnviosProps) => {
             <Tab label={<span className={classes.tabLabel}>ENVIADOS</span>} {...tabProps(1)} className={classes.tab} />
             <Tab label={<span className={classes.tabLabel}>ENTREGADOS</span>} {...tabProps(2)} className={classes.tab} />
           </Tabs>
-          <TabPanel value={value} filter={'IN_CHARGE'} index={0} counter={counter}>
+          <TabPanel value={tabActivo} filter={'IN_CHARGE'} index={0} salesList={salesList} newRefresh={newRefresh} refresh={refresh}>
             Encargados
           </TabPanel>
-          <TabPanel value={value} filter={'SHIPPED'} index={1} counter={counter}>
+          <TabPanel value={tabActivo} filter={'SHIPPED'} index={1} salesList={salesList} newRefresh={newRefresh} refresh={refresh}>
             Enviados
           </TabPanel>
-          <TabPanel value={value} filter={'DELIVERED'} index={2} counter={counter}>
+          <TabPanel value={tabActivo} filter={'DELIVERED'} index={2} salesList={salesList} newRefresh={newRefresh} refresh={refresh}>
             Entregados
           </TabPanel>
         </Paper>

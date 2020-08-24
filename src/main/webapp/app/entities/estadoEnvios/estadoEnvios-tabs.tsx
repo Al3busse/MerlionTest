@@ -12,6 +12,11 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  tableCellHead: {
+    fontSize: '1.1rem',
+    fontWeight: 800,
+  },
+  idNumberMargin: { paddingLeft: '70px' },
   bold: { fontWeight: 800 },
   tableRow: {
     '&:hover': {
@@ -35,43 +40,24 @@ interface TabPanelProps {
   index: any;
   value: any;
   filter: string;
-  counter: number;
+  salesList: any;
+  refresh: number;
+  newRefresh: any;
 }
 
 export default function TabPanel(props: TabPanelProps) {
-  const { children, value, index, filter, counter, ...other } = props;
-
-  // estado para refresh de pantalla
-  const [counter2, newCounter2] = useState(0);
-
-  // estado de data (sales)
-  const [data, updateData] = useState([]);
-
-  // importa data (sales) y lo aguarda en el estado
-  useEffect(
-    function effectFunction() {
-      axios.get('api/sales').then(response => {
-        updateData(response.data);
-      });
-    },
-    [counter2, counter]
-  );
-
-  // funcion para sumar +1 a ambos contadores
-  function counterUp() {
-    newCounter2(counter2 + 1);
-    counter + 1;
-  }
+  const { children, value, index, filter, salesList, refresh, newRefresh, ...other } = props;
+  const classes = useStyles();
 
   // handle de boton de enviar/entregar - cambia estado en BE y refreshea la pagina
   async function updateState(id: number) {
-    await updateStatusEntity(id).then((resp: any) => (resp ? counterUp() : counterUp()));
+    await updateStatusEntity(id).then(() => {
+      newRefresh(refresh + 1);
+    });
   }
 
-  const classes = useStyles();
-
   // filtra data por estado
-  const dataFiltered = data.filter(i => i.state === filter);
+  const dataFiltered = salesList.filter((i: any) => i.state === filter);
 
   // estado del orden de nº de ventas
   const [order, changeOrder] = useState('des');
@@ -98,15 +84,15 @@ export default function TabPanel(props: TabPanelProps) {
             <TableHead color="primary">
               <TableRow>
                 <TableCell className={classes.noBorder}>
-                  <Button onClick={handleSort} className={classes.bold + ' ' + classes.sortButton}>
+                  <Button onClick={handleSort} className={classes.tableCellHead + ' ' + classes.sortButton}>
                     <Translate contentKey="testApp.estadoEnvios.salesN">Nº de Venta</Translate>
-                    <FontAwesomeIcon icon={order === 'asc' ? 'sort-up' : 'sort-down'} className="ml-1" />
+                    <FontAwesomeIcon icon={order === 'asc' ? 'sort-numeric-up-alt' : 'sort-numeric-down'} className="ml-1" size="lg" />
                   </Button>
                 </TableCell>
-                <TableCell className={classes.bold}>
+                <TableCell className={classes.tableCellHead}>
                   <Translate contentKey="testApp.estadoEnvios.state">Estado</Translate>
                 </TableCell>
-                <TableCell className={classes.bold}>
+                <TableCell className={classes.tableCellHead}>
                   <Translate contentKey="testApp.estadoEnvios.product">Producto</Translate>
                 </TableCell>
               </TableRow>
@@ -117,10 +103,8 @@ export default function TabPanel(props: TabPanelProps) {
                   .sort((a, b) => sortIDs(a.id, b.id))
                   .map((sales, i) => (
                     <TableRow key={`entity-${i}`} hover className={classes.tableRow}>
-                      <TableCell className={classes.tableCell}>
-                        <Button href={`sales/${sales.id}`} color="primary" className="ml-3">
-                          {sales.id}
-                        </Button>
+                      <TableCell className={classes.idNumberMargin + ' ' + classes.bold + ' ' + classes.tableCell}>
+                        <Link to={`sales/${sales.id}`}>{sales.id}</Link>
                       </TableCell>
                       <TableCell className={'text-left' + ' ' + classes.tableCell}>
                         <Translate contentKey={`testApp.State.${sales.state}`} />
