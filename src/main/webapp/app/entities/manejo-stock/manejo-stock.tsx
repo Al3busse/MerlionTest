@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Translate, ICrudGetAllAction } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Box, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from '../product-bucket/product-bucket.reducer';
+import { updateProductBucket } from './manejo-stock.reducer';
 import { makeStyles } from '@material-ui/core/styles';
 
 // estilos de material-ui
@@ -39,9 +40,16 @@ const useStyles = makeStyles({
 export interface IManejoStockProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
 export const ManejoStock = (props: IManejoStockProps) => {
+  // estado para refresh de pantalla
+  const [counter, updateCounter] = useState(0);
+
   useEffect(() => {
     props.getEntities();
-  }, []);
+  }, [counter]);
+
+  const { productBucketList, loading } = props;
+
+  const productList = productBucketList.filter(i => i);
 
   const classes = useStyles();
 
@@ -54,23 +62,13 @@ export const ManejoStock = (props: IManejoStockProps) => {
   };
 
   // funcion para ordenar
-  const sortProducts = (a: string, b: string) => {
-    if (order === 'asc') {
-      {
-        if (a > b) {
-          return -1;
-        }
-        if (b > a) {
-          return 1;
-        }
-        return 0;
-      }
-    }
-  };
+  const sortProducts = (a: string, b: string) => (order === 'asc' ? b.localeCompare(a) : a.localeCompare(b));
 
-  const { productBucketList, match, loading } = props;
+  // handle de los botones de buckets
+  async function unitSwitch(id: number, change: string) {
+    await updateProductBucket(id, change).then(() => updateCounter(counter + 1));
+  }
 
-  const productList = productBucketList.filter(i => i);
   return (
     <div>
       <h2 id="product-bucket-heading">
@@ -92,7 +90,7 @@ export const ManejoStock = (props: IManejoStockProps) => {
                 </TableCell>
                 <TableCell padding="checkbox" />
                 <TableCell className={'text-center' + ' ' + classes.tableCellHead} padding="none">
-                  <Translate contentKey="testApp.manejoStock.availableToSellQuantity">Available To Sell Quantity</Translate>
+                  <Translate contentKey="testApp.manejoStock.availableToSellQuantity">Available Quantity</Translate>
                 </TableCell>
                 <TableCell padding="checkbox" />
                 <TableCell className={'text-center' + ' ' + classes.tableCellHead}>
@@ -113,10 +111,24 @@ export const ManejoStock = (props: IManejoStockProps) => {
                     </TableCell>
                     <TableCell className={classes.noPadding}>
                       <Box display="flex" flexDirection="column">
-                        <Button className={classes.button} variant="contained">
+                        <Button
+                          onClick={() => {
+                            unitSwitch(productBucket.id, 'InChargeToAvailable');
+                          }}
+                          className={classes.button}
+                          variant="contained"
+                          disabled={productBucket.inChargeQuantity < 1 ? true : false}
+                        >
                           <FontAwesomeIcon icon="long-arrow-alt-right" className="mr-1" />
                         </Button>
-                        <Button className={classes.button} variant="contained">
+                        <Button
+                          onClick={() => {
+                            unitSwitch(productBucket.id, 'AvailableToInCharge');
+                          }}
+                          className={classes.button}
+                          variant="contained"
+                          disabled={productBucket.availableToSellQuantity < 1 ? true : false}
+                        >
                           <FontAwesomeIcon icon="long-arrow-alt-left" className="mr-1" />
                         </Button>
                       </Box>
@@ -126,10 +138,24 @@ export const ManejoStock = (props: IManejoStockProps) => {
                     </TableCell>
                     <TableCell className={classes.noPadding}>
                       <Box display="flex" flexDirection="column">
-                        <Button className={classes.button} variant="contained">
+                        <Button
+                          onClick={() => {
+                            unitSwitch(productBucket.id, 'AvailableToBroken');
+                          }}
+                          className={classes.button}
+                          variant="contained"
+                          disabled={productBucket.availableToSellQuantity < 1 ? true : false}
+                        >
                           <FontAwesomeIcon icon="long-arrow-alt-right" className="mr-1" />
                         </Button>
-                        <Button className={classes.button} variant="contained">
+                        <Button
+                          onClick={() => {
+                            unitSwitch(productBucket.id, 'BrokenToAvailable');
+                          }}
+                          className={classes.button}
+                          variant="contained"
+                          disabled={productBucket.brokenQuantity < 1 ? true : false}
+                        >
                           <FontAwesomeIcon icon="long-arrow-alt-left" className="mr-1" />
                         </Button>
                       </Box>

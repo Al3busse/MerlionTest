@@ -5,7 +5,7 @@
         "title": "Manejo de Stock",
         "notFound": "Ningún producto encontrado"
       },
-      "availableToSellQuantity": "Disponibles para la venta",
+      "availableToSellQuantity": "Disponibles",
       "inChargeQuantity": "Encargados",
       "brokenQuantity": "Averiados",
       "product": "Producto"
