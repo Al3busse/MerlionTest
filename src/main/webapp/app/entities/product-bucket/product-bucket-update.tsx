@@ -23,7 +23,7 @@ export const ProductBucketUpdate = (props: IProductBucketUpdateProps) => {
   const { productBucketEntity, products, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/product-bucket');
+    props.history.push('/manejo-stock');
   };
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export const ProductBucketUpdate = (props: IProductBucketUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
-              <Button tag={Link} id="cancel-save" to="/product-bucket" replace color="info">
+              <Button tag={Link} id="cancel-save" to="/manejo-stock" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

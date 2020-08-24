@@ -105,7 +105,11 @@ export const ManejoStock = (props: IManejoStockProps) => {
                 .map((productBucket, i) => (
                   <TableRow key={`entity-${i}`} hover className={classes.tableRow}>
                     <TableCell className={'text-left' + ' ' + classes.tableCell}>
-                      {productBucket.product ? <Link to={`product/${productBucket.product.id}`}>{productBucket.product.name}</Link> : ''}
+                      {productBucket.product ? (
+                        <Link to={`product-bucket/${productBucket.id}/edit`}>{productBucket.product.name}</Link>
+                      ) : (
+                        ''
+                      )}
                     </TableCell>
                     <TableCell className={'text-center' + ' ' + classes.tableCell + ' ' + classes.bold}>
                       {productBucket.inChargeQuantity}
