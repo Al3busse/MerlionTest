@@ -24,6 +24,7 @@ const useStyles = makeStyles({
       backgroundColor: 'silver !important',
     },
   },
+  buttonBox: { margin: '6px 0 6px 0' },
   tableCell: { borderBottom: 'none', borderTop: '1px solid rgba(224, 224, 224, 1);' },
   noBorder: { borderBottom: 'none', borderTop: 'none' },
   sortButton: {
@@ -110,7 +111,7 @@ export const ManejoStock = (props: IManejoStockProps) => {
                       {productBucket.inChargeQuantity}
                     </TableCell>
                     <TableCell className={classes.noPadding}>
-                      <Box display="flex" flexDirection="column">
+                      <Box display="flex" flexDirection="column" className={classes.buttonBox}>
                         <Button
                           onClick={() => {
                             unitSwitch(productBucket.id, 'InChargeToAvailable');
@@ -137,7 +138,7 @@ export const ManejoStock = (props: IManejoStockProps) => {
                       {productBucket.availableToSellQuantity}
                     </TableCell>
                     <TableCell className={classes.noPadding}>
-                      <Box display="flex" flexDirection="column">
+                      <Box display="flex" flexDirection="column" className={classes.buttonBox}>
                         <Button
                           onClick={() => {
                             unitSwitch(productBucket.id, 'AvailableToBroken');
